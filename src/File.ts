@@ -14,7 +14,6 @@ import { PassThrough as PassThroughStream } from 'stream';
 export type onNewMessageCallback = (msg: string) => void;
 
 export class File {
-  // protected tail: Tail;
   protected queuedMessages: string[] = [];
   protected replayingMissedMessages = false;
   protected positionFile: string;
