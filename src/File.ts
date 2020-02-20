@@ -21,7 +21,7 @@ export class File {
   protected lastKnownPosition: number = 0;
 
   constructor(filePath: string, positionFile?: string) {
-    const positionFileIfNotDeclared = `${filePath}.pos`;
+    const positionFileIfNotDeclared = `${filePath}.log-push-pos`;
     this.logFile = filePath;
 
     // read missed data

@@ -34,7 +34,7 @@ async function main() {
       continue;
     }
 
-    new File(file, `${file}.pos`).onNewMessage(msg => {
+    new File(file, `${file}.log-push-pos`).onNewMessage(msg => {
       logger.info(msg);
     });
   }
