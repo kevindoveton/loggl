@@ -1,0 +1,94 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jasmine": true
+  },
+  "extends": [
+    "airbnb-base"
+  ],
+  "root": true,
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "import"
+  ],
+  "rules": {
+    "comma-dangle": ["error", "never"],
+    "import/prefer-default-export": "off",
+    "arrow-parens": ["error", "as-needed"],
+    "consistent-return": "off",
+    "no-restricted-syntax": "off",
+    "no-param-reassign": "off",
+    "no-plusplus": "off",
+    "prefer-template": "warn",
+    "no-await-in-loop": "warn",
+    "no-empty": "warn",
+    "no-else-return": "warn",
+    "no-empty-function": "warn",
+    "prefer-promise-reject-errors": "warn",
+    "import/order": "warn",
+    "no-async-promise-executor": "off",
+    "arrow-body-style": "off",
+    "no-buffer-constructor": "warn",
+    "class-methods-use-this": "off",
+    "lines-between-class-members": [
+      "error",
+      "always",
+      {
+        "exceptAfterSingleLine": true
+      }
+    ],
+    "no-continue": "off",
+    "operator-linebreak": "off",
+    "no-unused-vars": "off",
+    "keyword-spacing": ["warn", 
+      { 
+        "overrides": {
+          "this": { "before": false }
+        } 
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": ["error", {
+      "vars": "all",
+      "args": "after-used",
+      "ignoreRestSiblings": false
+    }],
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+    "import/no-extraneous-dependencies": [
+      "error", 
+      {
+        "devDependencies": ["**/*.spec.ts"]
+      }
+    ],
+    "dot-notation": "warn",
+    "no-useless-constructor": "off",
+    "import/no-unresolved": "error",
+    "no-dupe-class-members": "off"
+  },
+  "overrides": [{
+    "files": ["**/*.spec.ts"],
+    "rules": {
+      "dot-notation": "off"
+    }
+  }],
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "directory": "./*/tsconfig.json",
+        "alwaysTryTypes": true // always try to resolve types under `<roo/>@types` directory even it doesn't contain any source code, like `@types/unist`
+      }
+    }
+  }
+}
