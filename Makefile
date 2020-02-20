@@ -2,7 +2,7 @@ watch:
 	npm run build -- --watch
 
 run:
-	npm run run
+	LOG_FILES=`pwd`/test.txt npm run run
 
 build:
 	npm run build
