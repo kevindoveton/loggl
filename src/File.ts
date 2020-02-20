@@ -104,18 +104,13 @@ export class File {
         open(this.logFile, 'r', (err, fd) => { // eslint-disable-line
           const bytesToRead = stats.size - position;
           const writeBuffer = Buffer.alloc(bytesToRead);
-          read(fd, writeBuffer, 0, bytesToRead, position, (errRead, bytesRead, buffer) => {
-            const stream = new PassThroughStream();
-            stream.end(buffer);
-            const rl = createReadLineInterface({ input: stream });
-
-            rl.on('line', line => {
+          read(fd, writeBuffer, 0, bytesToRead, position, async (errRead, bytesRead, buffer) => {
+            const lines = await this.bufferToLines(buffer);
+            for (const line of lines) {
               this.sendMessage(line);
-            });
+            }
 
-            rl.on('close', () => {
-              accept();
-            });
+            return accept();
           });
         });
       });
