@@ -1,4 +1,3 @@
-// Imports the Google Cloud client library for Bunyan
 import bunyan from 'bunyan';
 import { LoggingBunyan } from '@google-cloud/logging-bunyan';
 
@@ -11,8 +10,6 @@ export class StackdriverLog {
 
     });
     this.logger = bunyan.createLogger({
-      // The JSON payload of the log as it appears in Stackdriver Logging
-      // will contain "name": "my-service"
       name: 'my-service',
       streams: [
         { stream: process.stdout, level: logLevel as any },

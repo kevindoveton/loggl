@@ -1,8 +1,12 @@
-// import { Tail } from 'tail';
 // @ts-ignore
 import { createReadStream } from 'tail-stream';
 import {
-  writeFileSync, read, readFile, existsSync, open, stat
+  writeFileSync,
+  read,
+  readFile,
+  existsSync,
+  open,
+  stat
 } from 'fs';
 import { createInterface as createReadLineInterface } from 'readline';
 import { PassThrough as PassThroughStream } from 'stream';
@@ -44,10 +48,6 @@ export class File {
         this.sendMessage(msg);
       }
     });
-    // this.tail = new Tail(filePath);
-    // this.tail.on('line', msg => {
-    // });
-    // this.tail.watch();
   }
 
   /**
@@ -102,7 +102,7 @@ export class File {
   protected async readAndSendMissedMessages(position: number) {
     return new Promise(accept => {
       stat(this.logFile, (err, stats) => {
-        open(this.logFile, 'r', (err, fd) => {
+        open(this.logFile, 'r', (err, fd) => { // eslint-disable-line
           const bytesToRead = stats.size - position;
           const writeBuffer = Buffer.alloc(bytesToRead);
           read(fd, writeBuffer, 0, bytesToRead, position, (errRead, bytesRead, buffer) => {
