@@ -3,6 +3,8 @@ Tail files and push the results to the centralised log server of your choice.
 
 ## Usage
 ```bash
+npm i -g loggl
+
 loggl start # start main process
 
 loggl add --file test.txt # start monitoring a file

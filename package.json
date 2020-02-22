@@ -1,5 +1,5 @@
 {
-  "name": "stackdriver-logger",
+  "name": "loggl",
   "version": "0.0.1",
   "description": "Stackdriver Logger",
   "main": "dist/index.js",
