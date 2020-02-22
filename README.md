@@ -1,4 +1,6 @@
 # loggl
+[![npm version](https://badge.fury.io/js/loggl.svg)](https://badge.fury.io/js/loggl)
+
 Tail files and push the results to the centralised log server of your choice.
 
 ## Usage
