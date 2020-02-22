@@ -1,43 +1,62 @@
-import { writeFileSync, existsSync } from 'fs';
-import { track } from 'temp';
-import { File } from './File';
-import { StackdriverLog } from './Logger';
+#!/usr/bin/env node
+import yargs from 'yargs';
+import { Monitor } from './Monitor';
 
+const { argv } = yargs
+  .command('start', 'starts file monitor', y => {
+    y.option('credentials', {
+      demand: false,
+      description: 'path credentials file',
+      type: 'string'
+    });
+  })
+  .command('stop', 'stop the logger')
+  .command('add', 'add a new file to be logged', y => {
+    y.option('file', {
+      demand: true,
+      description: 'path to file to add',
+      type: 'string'
+    });
+  })
+  .command('remove', 'stop logging a file', y => {
+    y.option('file', {
+      demand: true,
+      description: 'path to file to add',
+      type: 'string'
+    });
+  })
+  .command('files', 'view current files')
+  .demandCommand(1) // lets us assume a command is passed
+  .strict() // unknown command error
+  .help();
 
-function saveCredentials() {
-  const temp = track();
-  const googleApplicationCredentialsFileName = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-  const dialogFlowServiceAccountKeyData = process.env.DIALOGFLOW_SERVICE_ACCOUNT;
-  if (typeof dialogFlowServiceAccountKeyData !== 'undefined') {
-    const pathToWrite: string = googleApplicationCredentialsFileName || temp.path();
-    process.env.GOOGLE_APPLICATIONS_CREDENTIALS = pathToWrite;
+const command = argv._[0];
+const monitor = new Monitor();
 
-    writeFileSync(pathToWrite, dialogFlowServiceAccountKeyData);
-    console.info(`Wrote google service account file to ${pathToWrite}`); // eslint-disable-line
-  }
-}
-
-async function main() {
-  saveCredentials();
-
-  const logger = new StackdriverLog('trace');
-
-  if (typeof process.env.LOG_FILES !== 'string') {
-    throw new Error('must be started with LOG_FILES env variable');
-  }
-
-  const files = process.env.LOG_FILES.split(',');
-
-  for (const file of files) {
-    if (!existsSync(file)) {
-      logger.error(`skipping ${file} as it does not exist`);
-      continue;
+switch (command) {
+  case 'start': {
+    // eslint-disable-next-line
+    const pathToCredentials: string | undefined = process.env.GOOGLE_APPLICATION_CREDENTIALS || (argv as any).credentials;
+    if (typeof pathToCredentials === 'undefined') {
+      console.error('You must either pass credentials as an option or set GOOGLE_APPLICATION_CREDENIALS as environment variable');
+      break;
     }
 
-    new File(file, `${file}.log-push-pos`).onNewMessage(msg => {
-      logger.info(msg);
-    });
+    monitor.start(pathToCredentials);
+    break;
   }
+  case 'stop':
+    monitor.stop();
+    break;
+  case 'add':
+    monitor.addFile((argv as any).file);
+    break;
+  case 'remove':
+    monitor.removeFile((argv as any).file);
+    break;
+  case 'files':
+    monitor.files();
+    break;
+  default:
+    console.error(`Error: command "${command}" not implemented yet`);
 }
-
-main();

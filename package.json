@@ -18,9 +18,14 @@
   "bugs": {
     "url": "https://github.com/vessels-tech/dfstalk/issues"
   },
+  "bin": {
+    "loggl": "dist/index.js"
+  },
   "homepage": "https://github.com/vessels-tech/dfstalk#readme",
   "devDependencies": {
+    "@types/bunyan": "^1.8.6",
     "@types/temp": "^0.8.34",
+    "@types/yargs": "^15.0.3",
     "@typescript-eslint/eslint-plugin": "2.10.0",
     "@typescript-eslint/parser": "2.10.0",
     "eslint": "6.7.2",
@@ -29,13 +34,14 @@
     "eslint-import-resolver-webpack": "^0.12.0",
     "eslint-plugin-import": "2.18.2",
     "nodemon": "^2.0.2",
-    "typescript": "^3.7.5",
-    "@types/bunyan": "^1.8.6"
+    "typescript": "^3.7.5"
   },
   "dependencies": {
     "@google-cloud/logging-bunyan": "^2.0.3",
     "bunyan": "^1.8.12",
+    "pm2": "^4.2.3",
     "tail-stream": "^0.3.4",
-    "temp": "^0.9.1"
+    "temp": "^0.9.1",
+    "yargs": "^15.1.0"
   }
 }
