@@ -26,6 +26,7 @@ const { argv } = yargs
     });
   })
   .command('files', 'view current files')
+  .command('status', 'current status of loggl')
   .demandCommand(1) // lets us assume a command is passed
   .strict() // unknown command error
   .help();
@@ -56,6 +57,9 @@ switch (command) {
     break;
   case 'files':
     monitor.files();
+    break;
+  case 'status':
+    monitor.running();
     break;
   default:
     console.error(`Error: command "${command}" not implemented yet`);

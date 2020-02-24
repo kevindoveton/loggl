@@ -111,6 +111,18 @@ export class Monitor {
     });
   }
 
+  async running() {
+    const isRunning = await this.pm2.runWithPm2(() => {
+      return this.pm2.running(this.appName);
+    });
+
+    if (isRunning) {
+      console.log('loggl is currently running');
+    } else {
+      console.log('loggl is not running');
+    }
+  }
+
   protected async currentFiles(): Promise<Set<string>> {
     let env: {[key: string]: any} | undefined;
     try {

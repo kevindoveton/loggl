@@ -6,3 +6,6 @@ run:
 
 build:
 	npm run build
+
+update-global:
+	npm i && npm i -g

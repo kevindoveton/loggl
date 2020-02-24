@@ -86,6 +86,18 @@ export class PromisePm2 {
     });
   }
 
+  running(app: string): Promise<boolean> {
+    return new Promise(accept => {
+      pm2.describe(app, (err, apps) => {
+        if (err || apps.length === 0) {
+          return accept(false);
+        }
+
+        accept(apps[0].pm2_env && apps[0].pm2_env.status === 'online');
+      });
+    });
+  }
+
   reload(app:string, reloadEnv: boolean = false) {
     return new Promise((accept, reject) => {
       (pm2 as any).reload(
