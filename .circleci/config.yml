@@ -31,6 +31,19 @@ jobs:
           name: Publish package
           command: npm publish
 
+      - add_ssh_keys:
+          fingerprints:
+            - "d9:c6:14:e8:2e:06:9b:28:19:f6:dc:f8:ec:7c:ea:b9"
+
+      - run:
+          name: bump package version
+          command: |
+            git config user.email "ci@kdoveton.com"
+            git config user.name "CircleCI"
+            npm version prerelease --preid=alpha -m "Bumped version number to %s [ci skip]"
+            git push origin master
+            git push --tags
+
 workflows:
   version: 2
   deploy-npm:

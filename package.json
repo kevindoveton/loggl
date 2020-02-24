@@ -1,6 +1,6 @@
 {
   "name": "loggl",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Stackdriver Logger",
   "main": "dist/index.js",
   "scripts": {
