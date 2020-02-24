@@ -1,7 +1,7 @@
 import { writeFileSync, existsSync } from 'fs';
 import { track } from 'temp';
 import { File } from './File';
-import { StackdriverLog } from './Logger';
+import { StackdriverLog } from './Drivers/StackdriverLog';
 
 
 function saveCredentials() {
