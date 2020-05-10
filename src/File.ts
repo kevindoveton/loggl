@@ -36,6 +36,7 @@ export class File {
       onTruncate: 'end',
       endOnError: false
     });
+
     tail.on('data', async (buffer: Buffer) => {
       const messages = await this.bufferToLines(buffer);
       for (const msg of messages) {
@@ -45,6 +46,15 @@ export class File {
         }
 
         this.sendMessage(msg);
+      }
+    });
+
+    // on file move, write to position file and restart
+    tail.on('move', async () => {
+      writeFileSync(this.positionFile, '0');
+      await this.setupPositionFile(this.positionFile);
+      for (const subscriber of this.onNewMessageSubscribers) {
+        subscriber(`Log at ${this.logFile} has successfully rotated.`);
       }
     });
   }
